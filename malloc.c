@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/13 17:52:30 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/13 18:02:39 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_block	*create_new_block(t_block *ptr, t_block *prev, size_t size)
 {
 	ptr->data_size = size;
 	ptr->next = NULL;
-	ptr->prev = NULL;
+	ptr->prev = prev;
 	if (prev)
 		prev->next = ptr;
 	return (ptr);
