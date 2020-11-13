@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 13:21:40 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/13 15:42:38 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/13 17:16:50 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@
 # include "libft/includes/libft.h"
 # include <sys/mman.h>
 
-#define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap))
-#define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block))
+//might need to change to constants ???
 
-#define TINY_HEAP_ALLOCATION_SIZE (4 * getpagesize())
-#define TINY_BLOCK_SIZE (TINY_HEAP_ALLOCATION_SIZE / 128)
-#define SMALL_HEAP_ALLOCATION_SIZE (16 * getpagesize())
-#define SMALL_BLOCK_SIZE (SMALL_HEAP_ALLOCATION_SIZE / 128)
+# define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap))
+# define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block))
+
+# define TINY_HEAP_ALLOCATION_SIZE (4 * getpagesize())
+# define TINY_BLOCK_SIZE (TINY_HEAP_ALLOCATION_SIZE / 128)
+# define SMALL_HEAP_ALLOCATION_SIZE (16 * getpagesize())
+# define SMALL_BLOCK_SIZE (SMALL_HEAP_ALLOCATION_SIZE / 128)
 
 typedef struct		s_block
 {
@@ -40,12 +42,13 @@ typedef struct		s_heap
 	struct s_heap	*prev;
 	struct s_heap	*next;
 
-
 }					t_heap;
 
 typedef struct		s_malloc
 {
 	t_heap			*tiny;
+	t_heap			*small;
+	t_heap			*large;
 
 }					t_malloc;
 
