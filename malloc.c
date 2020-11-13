@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/13 16:05:35 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/13 17:09:05 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ t_heap	*create_new_heap(t_heap *prev, size_t size)
 	new_heap->size = heap_size;
 	new_heap->block_amount = 0;
 	new_heap->size_available = heap_size - sizeof(t_heap);
-	prev->next = new_heap;
+	if (prev)
+		prev->next = new_heap;
 	return (new_heap);
 }
 
