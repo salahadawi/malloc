@@ -72,12 +72,16 @@ void	*get_block(t_heap *heap, size_t size)
 	i = 0;
 	prev = NULL;
 	ptr = HEAP_SHIFT(heap);
-	heap->block_amount++;
-	heap->size_available -= size + sizeof(t_block);
 	while (1)
 	{
 		if (i == heap->block_amount)
-			return (create_new_block(ptr, prev, size));
+		{
+			ptr = create_new_block(ptr, prev, size);
+			heap->block_amount++;
+			heap->size_available -= size + sizeof(t_block);
+			return (ptr);
+
+		}
 		prev = ptr;
 		ptr = ptr->next;
 		i++;
