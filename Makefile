@@ -6,7 +6,7 @@
 #    By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/10 19:26:38 by sadawi            #+#    #+#              #
-#    Updated: 2020/11/17 19:50:57 by sadawi           ###   ########.fr        #
+#    Updated: 2020/11/19 18:28:18 by sadawi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ endif
 NAME = libft_malloc.so
 LINK = libft_malloc_$(HOSTTYPE).so
 
-CFILES = malloc.c free.c
+CFILES = malloc.c free.c realloc.c
 
 SRCS = $(addprefix srcs/, $(CFILES))
 OBJS = $(addprefix objs/, $(notdir $(SRCS:.c=.o)))
