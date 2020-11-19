@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/17 19:55:16 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/19 18:45:27 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,67 +18,90 @@ void	free_error(void)
 	exit(1);
 }
 
-t_heap_and_block *find_block(t_heap *heap, void *ptr)
+int	find_block(t_heap *heap, void *ptr)
 {
 	t_block *tmp;
+	size_t	i;
 
 	while (heap)
 	{
+		i = 0;
 		tmp = HEAP_SHIFT(heap);
-		while (tmp)
+		while (i < heap->block_amount)
 		{
 			if (BLOCK_SHIFT(tmp) == ptr)
-				return (&((t_heap_and_block){heap, tmp}));
+			{
+				g_malloc.heap = heap;
+				g_malloc.block = tmp;
+				return (1);
+			}
 			tmp = tmp->next;
+			i++;
 		}
 		heap = heap->next;
 	}
-	return (NULL);
+	return (0);
 }
 
-void	set_block_free(t_heap_and_block *data)
+void	set_block_free(t_heap *heap, t_block *block)
 {
-	data->block->freed = 1;
-	data->heap->block_amount--;
+	block->freed = 1;
+	heap->blocks_freed++;
 }
 
-void	merge_blocks(t_heap_and_block *data)
+void	merge_blocks(t_block *block)
 {
-	if (data->block->prev && data->block->prev->freed)
+	if (block->prev && block->prev->freed)
 	{
-		data->block->prev->data_size += data->block->data_size + sizeof(t_block);
-		data->block->prev->next = data->block->next;
-		if (data->block->next)
-			data->block->next->prev = data->block->prev;
-		data->block = data->block->prev;
+		block->prev->data_size += block->data_size + sizeof(t_block);
+		block->prev->next = block->next;
+		if (block->next)
+			block->next->prev = block->prev;
+		block = block->prev;
 	}
-	if (data->block->next && data->block->next->freed)
+	if (block->next && block->next->freed)
 	{
-		data->block->data_size += data->block->next->data_size;
-		if (data->block->next->next)
-			data->block->next->next->prev = data->block;
-		data->block->next = data->block->next->next;
+		block->data_size += block->next->data_size;
+		if (block->next->next)
+			block->next->next->prev = block;
+		block->next = block->next->next;
 	}
+}
+
+void	remove_heap(t_heap *heap)
+{
+	t_heap *next;
+
+	if (heap->next)
+		heap->next->prev = heap->prev;
+	if (heap->prev)
+		heap->prev->next = heap->next;
+	next = heap->next;
+	munmap(heap, heap->size);
+	if (heap == g_malloc.tiny)
+		g_malloc.tiny = next;
+	if (heap == g_malloc.small)
+		g_malloc.small = next;
+	if (heap == g_malloc.large)
+		g_malloc.large = next;
 }
 
 void	free(void *ptr)
 {
-	t_heap_and_block *data;
-
 	if (!ptr)
 		return ;
 	// iterate through heaps, checking if block pointer
 	// matches ptr
-	if (!(data = find_block(g_malloc.tiny, ptr)))
-		if (!(data = find_block(g_malloc.small, ptr)))
-			if (!(data = find_block(g_malloc.large, ptr)))
+	if (!(find_block(g_malloc.tiny, ptr)))
+		if (!(find_block(g_malloc.small, ptr)))
+			if (!(find_block(g_malloc.large, ptr)))
 				free_error();
 	// set block to "not in use"
-	set_block_free(data);
+	set_block_free(g_malloc.heap, g_malloc.block);
 	//merge with nearby blocks if possible
-	merge_blocks(data);
+	//merge_blocks(g_malloc.block);
 	// free heap with munmap if no blocks left
-	if (data->heap->block_amount == 0)
-		munmap(data->heap, data->heap->size);
+	if (g_malloc.heap->block_amount == g_malloc.heap->blocks_freed)
+		remove_heap(g_malloc.heap);
 	// memory leak if not all empty heaps freed?
 }
