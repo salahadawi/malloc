@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/17 20:02:49 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/19 15:02:46 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,25 @@ size_t	get_heap_size(size_t size)
 		return (TINY_HEAP_ALLOCATION_SIZE);
 	if (size <= (size_t)SMALL_BLOCK_SIZE)
 		return (SMALL_HEAP_ALLOCATION_SIZE);
-	return (align_on_bytes(size, getpagesize()));
+	return (align_on_bytes(size + sizeof(t_block) + sizeof(t_heap), getpagesize()));
+}
+
+size_t	get_block_size(size_t size)
+{
+	if (size <= (size_t)TINY_BLOCK_SIZE)
+		return (TINY_BLOCK_SIZE);
+	if (size <= (size_t)SMALL_BLOCK_SIZE)
+		return (SMALL_BLOCK_SIZE);
+	return (size);
+}
+
+size_t	get_block_size_create(size_t size)
+{
+	if (size <= (size_t)TINY_BLOCK_SIZE)
+		return (TINY_BLOCK_SIZE);
+	if (size <= (size_t)SMALL_BLOCK_SIZE)
+		return (SMALL_BLOCK_SIZE);
+	return (size - sizeof(t_block));
 }
 
 void	store_head(t_heap *new_heap, size_t size)
@@ -48,6 +66,7 @@ t_heap	*create_new_heap(t_heap *prev, size_t size)
 	new_heap->next = NULL;
 	new_heap->size = heap_size;
 	new_heap->block_amount = 0;
+	new_heap->blocks_freed = 0;
 	if (prev)
 		prev->next = new_heap;
 	else
@@ -57,6 +76,7 @@ t_heap	*create_new_heap(t_heap *prev, size_t size)
 
 t_block	*create_new_block(t_block *ptr, t_block *prev, size_t size, t_heap *heap)
 {
+	size = get_block_size(size);
 	ptr->data_size = size;
 	ptr->freed = 0;
 	ptr->next = NULL;
@@ -84,19 +104,23 @@ void	*get_block2(t_heap *heap, size_t size)
 	t_block	*prev;
 
 	i = 0;
-	size_left = get_heap_size(size);
+	size_left = heap->size - sizeof(t_heap);
 	tmp = HEAP_SHIFT(heap);
 	prev = NULL;
 	while (i != heap->block_amount)
 	{
 		if (tmp->freed && size <= tmp->data_size)
+		{
+			tmp->freed = 0;
+			heap->blocks_freed--;
 			return (tmp);
-		size_left -= tmp->data_size;
+		}
+		size_left -= tmp->data_size + sizeof(t_block);
 		prev = tmp;
 		tmp = tmp->data_size + BLOCK_SHIFT(tmp);
 		i++;
 	}
-	if (size <= size_left)
+	if (size + sizeof(t_block) <= size_left)
 		return (create_new_block(tmp, prev, size, heap));
 	return (NULL);
 }
@@ -154,7 +178,7 @@ void	*malloc(size_t size)
 
 	if (size == 0)
 		return (NULL);
-	size = align_on_bytes(size, 16);
+	size = get_block_size(align_on_bytes(size, 16));
 	ptr = get_heap(size);
 	//ptr = get_block(ptr, size);
 	return (BLOCK_SHIFT(ptr));
