@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 15:50:37 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/19 10:57:37 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/23 13:31:54 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	print_heap_size(t_heap *heap)
 
 size_t	print_block(t_block *block)
 {
+	if (block->freed)
+		return (0);
 	ft_putnbr((size_t)BLOCK_SHIFT(block));
 	write(1, " - ", 3);
 	ft_putnbr((size_t)BLOCK_SHIFT(block) + block->data_size);
@@ -93,6 +95,8 @@ size_t	ft_strlen(char *str)
 
 size_t	print_block_string(t_block *block)
 {
+	if (block->freed)
+		return (0);
 	ft_putnbr((size_t)BLOCK_SHIFT(block));
 	write(1, " - ", 3);
 	ft_putnbr((size_t)BLOCK_SHIFT(block) + block->data_size);
