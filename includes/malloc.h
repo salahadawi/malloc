@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 13:21:40 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/19 18:29:17 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/24 15:16:05 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MALLOC_H
 
 # include <sys/mman.h>
+# include <pthread.h>
 # include <unistd.h>
 # include <stdlib.h>
 
