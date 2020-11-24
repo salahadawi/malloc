@@ -14,8 +14,11 @@
 
 void	realloc_error(void)
 {
-	write(2, "realloc: *** error: pointer being realloced was not allocated\n", 62);
-	exit(1);
+	if (g_malloc.debug_realloc)
+	{
+		write(2, "realloc: *** error: pointer being realloced was not allocated\n", 62);
+		exit(1);
+	}
 }
 
 // int		attempt_resize(void *ptr, size_t size)

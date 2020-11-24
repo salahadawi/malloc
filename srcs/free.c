@@ -14,8 +14,12 @@
 
 void	free_error(void)
 {
-	write(2, "malloc: *** error: pointer being freed was not allocated\n", 58);
-	exit(1);
+	if (g_malloc.debug_free)
+	{
+		write(2, "malloc: *** error: pointer being freed was not allocated\n",
+		58);
+		exit(1);
+	}
 }
 
 int	find_block(t_heap *heap, void *ptr)
@@ -99,6 +103,8 @@ void	free(void *ptr)
 			{
 				pthread_mutex_unlock(&g_malloc_mutex);
 				free_error();
+				return ;
+			}
 	// set block to "not in use"
 	set_block_free(g_malloc.heap, g_malloc.block);
 	//merge with nearby blocks if possible

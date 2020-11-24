@@ -63,6 +63,8 @@ typedef struct		s_malloc
 	//tmp, probably not allowed
 	t_heap			*heap;
 	t_block			*block;
+	int				debug_free;
+	int				debug_realloc;
 
 }					t_malloc;
 
