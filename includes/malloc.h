@@ -68,7 +68,8 @@ typedef struct		s_malloc
 
 }					t_malloc;
 
-t_malloc			g_malloc;
+extern t_malloc			g_malloc;
+extern pthread_mutex_t 	g_malloc_mutex;
 
 void				show_alloc_mem(void);
 
