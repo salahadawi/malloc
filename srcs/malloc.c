@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/24 13:38:47 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/24 17:48:09 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,24 @@ size_t	align_on_bytes(size_t num, size_t alignment)
 	return ((num + (alignment - 1)) & ~(alignment - 1));
 }
 
+size_t	calculate_large_heap_size(size_t size)
+{
+	int multiple;
+
+	multiple = getpagesize() / ((size + sizeof(t_block)) + sizeof(t_heap));
+	multiple++;
+	return (multiple * (size + sizeof(t_block)) + sizeof(t_heap));
+	return (align_on_bytes(multiple * (size + sizeof(t_block)) + sizeof(t_heap), getpagesize()));
+}
+
 size_t	get_heap_size(size_t size)
 {
 	if (size <= (size_t)TINY_BLOCK_SIZE)
 		return (TINY_HEAP_ALLOCATION_SIZE);
 	if (size <= (size_t)SMALL_BLOCK_SIZE)
 		return (SMALL_HEAP_ALLOCATION_SIZE);
+	//return ((4 * (size + sizeof(t_block))) + sizeof(t_heap));
+	return (calculate_large_heap_size(size));
 	return (align_on_bytes(size + sizeof(t_block) + sizeof(t_heap), getpagesize()));
 }
 
