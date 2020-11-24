@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 15:50:37 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/23 13:31:54 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/24 15:06:05 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,9 @@ void	show_alloc_mem(void)
 
 void	show_alloc_mem_string(void)
 {
+	pthread_mutex_lock(&g_malloc_mutex);
 	print_heaps_strings(g_malloc.tiny);
 	print_heaps_strings(g_malloc.small);
 	print_heaps_strings(g_malloc.large);
+	pthread_mutex_unlock(&g_malloc_mutex);
 }

@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/19 18:45:27 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/24 15:20:50 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,14 @@ void	free(void *ptr)
 {
 	if (!ptr)
 		return ;
+	pthread_mutex_lock(&g_malloc_mutex);
 	// iterate through heaps, checking if block pointer
 	// matches ptr
 	if (!(find_block(g_malloc.tiny, ptr)))
 		if (!(find_block(g_malloc.small, ptr)))
 			if (!(find_block(g_malloc.large, ptr)))
+			{
+				pthread_mutex_unlock(&g_malloc_mutex);
 				free_error();
 	// set block to "not in use"
 	set_block_free(g_malloc.heap, g_malloc.block);
@@ -103,5 +106,6 @@ void	free(void *ptr)
 	// free heap with munmap if no blocks left
 	if (g_malloc.heap->block_amount == g_malloc.heap->blocks_freed)
 		remove_heap(g_malloc.heap);
+	pthread_mutex_unlock(&g_malloc_mutex);
 	// memory leak if not all empty heaps freed?
 }

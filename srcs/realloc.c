@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/19 18:32:01 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/24 15:19:48 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,16 @@ void	*realloc(void *ptr, size_t size)
 		free(ptr);
 		return (malloc(1));
 	}
+	pthread_mutex_lock(&g_malloc_mutex);
 	if (!(find_block(g_malloc.tiny, ptr)))
 		if (!(find_block(g_malloc.small, ptr)))
 			if (!(find_block(g_malloc.large, ptr)))
+			{
+				pthread_mutex_unlock(&g_malloc_mutex);
 				realloc_error();
+				return (NULL);
+			}
+	pthread_mutex_unlock(&g_malloc_mutex);
 	return (tmp_realloc(ptr, size));
 	// if (attempt_resize(ptr, size))
 	// 	return (ptr);

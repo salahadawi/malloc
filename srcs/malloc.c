@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/19 15:02:46 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/24 13:38:47 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,8 +178,10 @@ void	*malloc(size_t size)
 
 	if (size == 0)
 		return (NULL);
+	pthread_mutex_lock(&g_malloc_mutex);
 	size = get_block_size(align_on_bytes(size, 16));
 	ptr = get_heap(size);
 	//ptr = get_block(ptr, size);
+	pthread_mutex_unlock(&g_malloc_mutex);
 	return (BLOCK_SHIFT(ptr));
 }
