@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/24 15:20:50 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/25 13:28:04 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,9 @@ void	remove_heap(t_heap *heap)
 {
 	t_heap *next;
 
-	if (heap->next)
-		heap->next->prev = heap->prev;
+	if (!heap->next)
+		return ;
+	heap->next->prev = heap->prev;
 	if (heap->prev)
 		heap->prev->next = heap->next;
 	next = heap->next;
