@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 13:36:03 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 15:40:19 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,22 @@ static void	remove_heap(t_heap *heap)
 		g_malloc.small = next;
 	if (heap == g_malloc.large)
 		g_malloc.large = next;
+}
+
+void	free_skip_mutex(void *ptr)
+{
+	if (!ptr)
+		return ;
+	if (!(find_block(g_malloc.tiny, ptr)))
+		if (!(find_block(g_malloc.small, ptr)))
+			if (!(find_block(g_malloc.large, ptr)))
+			{
+				free_error();
+				return ;
+			}
+	set_block_free(g_malloc.heap, g_malloc.block);
+	if (g_malloc.heap->block_amount == g_malloc.heap->blocks_freed)
+		remove_heap(g_malloc.heap);
 }
 
 void	free(void *ptr)
