@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 13:34:57 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 13:36:03 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	munmap_error(void)
 	exit(1);
 }
 
-static int	find_block(t_heap *heap, void *ptr)
+int	find_block(t_heap *heap, void *ptr)
 {
 	t_block *tmp;
 	size_t	i;
