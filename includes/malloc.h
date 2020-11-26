@@ -18,8 +18,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-//might need to change to constants ???
-
 # define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap))
 # define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block))
 
@@ -28,45 +26,43 @@
 # define SMALL_HEAP_ALLOCATION_SIZE (16 * getpagesize())
 # define SMALL_BLOCK_SIZE (SMALL_HEAP_ALLOCATION_SIZE / 128)
 
-typedef struct		s_block
+typedef struct			s_block
 {
-	size_t			data_size;
-	int				freed;
-	struct s_block	*prev;
-	struct s_block	*next;
+	size_t				data_size;
+	int					freed;
+	struct s_block		*prev;
+	struct s_block		*next;
 
-}					t_block;
+}						t_block;
 
-typedef struct		s_heap
+typedef struct			s_heap
 {
-	size_t			size;
-	size_t			block_amount;
-	size_t			blocks_freed;
-	struct s_heap	*prev;
-	struct s_heap	*next;
+	size_t				size;
+	size_t				block_amount;
+	size_t				blocks_freed;
+	struct s_heap		*prev;
+	struct s_heap		*next;
 
-}					t_heap;
+}						t_heap;
 
-typedef struct		s_heap_and_block
+typedef struct			s_heap_and_block
 {
-	t_heap			*heap;
-	t_block			*block;
+	t_heap				*heap;
+	t_block				*block;
 
-}					t_heap_and_block;
+}						t_heap_and_block;
 
-typedef struct		s_malloc
+typedef struct			s_malloc
 {
-	t_heap			*tiny;
-	t_heap			*small;
-	t_heap			*large;
+	t_heap				*tiny;
+	t_heap				*small;
+	t_heap				*large;
+	t_heap				*heap;
+	t_block				*block;
+	int					debug_free;
+	int					debug_realloc;
 
-	//tmp, probably not allowed
-	t_heap			*heap;
-	t_block			*block;
-	int				debug_free;
-	int				debug_realloc;
-
-}					t_malloc;
+}						t_malloc;
 
 extern t_malloc			g_malloc;
 extern pthread_mutex_t	g_malloc_mutex;
