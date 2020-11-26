@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 15:50:37 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 13:39:06 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 14:48:29 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_putchar(int c)
 
 void	ft_putnbr(size_t n)
 {
-	int i;
-	size_t arr[30];
+	int		i;
+	size_t	arr[30];
 
 	i = 0;
 	if (n == 0)
@@ -38,8 +38,8 @@ void	ft_putnbr(size_t n)
 
 void	ft_putnbr_nl(size_t n)
 {
-	int i;
-	size_t arr[30];
+	int		i;
+	size_t	arr[30];
 
 	i = 0;
 	if (n == 0)
