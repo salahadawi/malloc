@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/24 15:19:48 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 13:28:07 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ void	realloc_error(void)
 		exit(1);
 	}
 }
-
-// int		attempt_resize(void *ptr, size_t size)
-// {
-
-// }
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
@@ -52,7 +47,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 }
 
 
-void	*tmp_realloc(void *ptr, size_t size)
+void	*resize_memory(void *ptr, size_t size)
 {
 	void	*new;
 	size_t	len;
@@ -83,9 +78,5 @@ void	*realloc(void *ptr, size_t size)
 				return (NULL);
 			}
 	pthread_mutex_unlock(&g_malloc_mutex);
-	return (tmp_realloc(ptr, size));
-	// if (attempt_resize(ptr, size))
-	// 	return (ptr);
-	// free(ptr);
-	return (ptr);
+	return (resize_memory(ptr, size));
 }
