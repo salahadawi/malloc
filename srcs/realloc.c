@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 15:08:31 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 15:40:55 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	*resize_memory(void *ptr, size_t size)
 	new = malloc_skip_mutex(size);
 	len = size < g_malloc.block->data_size ? size : g_malloc.block->data_size;
 	ft_memmove(new, ptr, len);
-	free(ptr);
+	free_skip_mutex(ptr);
 	pthread_mutex_unlock(&g_malloc_mutex);
 	return (new);
 }
