@@ -6,24 +6,24 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 13:31:35 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 13:36:35 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-void	mmap_error(void)
+static void	mmap_error(void)
 {
 	write(2, "mmap: *** error: address allocation failed\n", 49);
 	exit(1);
 }
 
-size_t	align_on_bytes(size_t num, size_t alignment)
+static size_t	align_on_bytes(size_t num, size_t alignment)
 {
 	return ((num + (alignment - 1)) & ~(alignment - 1));
 }
 
-size_t	calculate_large_heap_size(size_t size)
+static size_t	calculate_large_heap_size(size_t size)
 {
 	int multiple;
 
@@ -32,7 +32,7 @@ size_t	calculate_large_heap_size(size_t size)
 	return (multiple * (size + sizeof(t_block)) + sizeof(t_heap));
 }
 
-size_t	get_heap_size(size_t size)
+static size_t	get_heap_size(size_t size)
 {
 	if (size <= (size_t)TINY_BLOCK_SIZE)
 		return (TINY_HEAP_ALLOCATION_SIZE);
@@ -41,7 +41,7 @@ size_t	get_heap_size(size_t size)
 	return (calculate_large_heap_size(size));
 }
 
-size_t	get_block_size(size_t size)
+static size_t	get_block_size(size_t size)
 {
 	if (size <= (size_t)TINY_BLOCK_SIZE)
 		return (TINY_BLOCK_SIZE);
@@ -50,7 +50,7 @@ size_t	get_block_size(size_t size)
 	return (size);
 }
 
-void	store_head(t_heap *new_heap, size_t size)
+static void	store_head(t_heap *new_heap, size_t size)
 {
 	if (size <= (size_t)TINY_BLOCK_SIZE)
 		g_malloc.tiny = new_heap;
@@ -60,7 +60,7 @@ void	store_head(t_heap *new_heap, size_t size)
 		g_malloc.large = new_heap;
 }
 
-t_heap	*create_new_heap(t_heap *prev, size_t size)
+static t_heap	*create_new_heap(t_heap *prev, size_t size)
 {
 	t_heap	*new_heap;
 	size_t	heap_size;
@@ -81,7 +81,7 @@ t_heap	*create_new_heap(t_heap *prev, size_t size)
 	return (new_heap);
 }
 
-t_block	*create_new_block(t_block *ptr, t_block *prev,
+static t_block	*create_new_block(t_block *ptr, t_block *prev,
 									size_t size, t_heap *heap)
 {
 	size = get_block_size(size);
@@ -95,7 +95,7 @@ t_block	*create_new_block(t_block *ptr, t_block *prev,
 	return (ptr);
 }
 
-t_heap	*get_heap_list(size_t size)
+static t_heap	*get_heap_list(size_t size)
 {
 	if (size <= (size_t)TINY_BLOCK_SIZE)
 		return (g_malloc.tiny);
@@ -104,7 +104,7 @@ t_heap	*get_heap_list(size_t size)
 	return (g_malloc.large);
 }
 
-void	*get_block(t_heap *heap, size_t size)
+static void	*get_block(t_heap *heap, size_t size)
 {
 	size_t	i;
 	size_t	size_left;
@@ -133,7 +133,7 @@ void	*get_block(t_heap *heap, size_t size)
 	return (NULL);
 }
 
-void	*get_heap(size_t size)
+static void	*get_heap(size_t size)
 {
 	t_heap	*ptr;
 	t_block	*block;
