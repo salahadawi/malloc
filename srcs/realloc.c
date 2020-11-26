@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 13:28:07 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 13:29:46 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	realloc_error(void)
 {
 	if (g_malloc.debug_realloc)
 	{
-		write(2, "realloc: *** error: pointer being realloced was not allocated\n", 62);
+		write(2,
+		"realloc: *** error: pointer being realloced was not allocated\n", 62);
 		exit(1);
 	}
 }
@@ -45,7 +46,6 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	}
 	return (dst);
 }
-
 
 void	*resize_memory(void *ptr, size_t size)
 {
