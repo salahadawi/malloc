@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 11:54:28 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 13:31:35 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,6 @@ size_t	get_block_size(size_t size)
 	return (size);
 }
 
-size_t	get_block_size_create(size_t size)
-{
-	if (size <= (size_t)TINY_BLOCK_SIZE)
-		return (TINY_BLOCK_SIZE);
-	if (size <= (size_t)SMALL_BLOCK_SIZE)
-		return (SMALL_BLOCK_SIZE);
-	return (size - sizeof(t_block));
-}
-
 void	store_head(t_heap *new_heap, size_t size)
 {
 	if (size <= (size_t)TINY_BLOCK_SIZE)
@@ -90,7 +81,8 @@ t_heap	*create_new_heap(t_heap *prev, size_t size)
 	return (new_heap);
 }
 
-t_block	*create_new_block(t_block *ptr, t_block *prev, size_t size, t_heap *heap)
+t_block	*create_new_block(t_block *ptr, t_block *prev,
+									size_t size, t_heap *heap)
 {
 	size = get_block_size(size);
 	ptr->data_size = size;
@@ -112,7 +104,7 @@ t_heap	*get_heap_list(size_t size)
 	return (g_malloc.large);
 }
 
-void	*get_block2(t_heap *heap, size_t size)
+void	*get_block(t_heap *heap, size_t size)
 {
 	size_t	i;
 	size_t	size_left;
@@ -149,7 +141,7 @@ void	*get_heap(size_t size)
 	ptr = get_heap_list(size);
 	while (1)
 	{
-		if (ptr && (block = get_block2(ptr, size)))
+		if (ptr && (block = get_block(ptr, size)))
 			return (block);
 		if (!ptr || !ptr->next)
 		{
@@ -157,36 +149,8 @@ void	*get_heap(size_t size)
 			return (create_new_block(HEAP_SHIFT(ptr), NULL, size, ptr));
 		}
 		ptr = ptr->next;
-		// if (ptr->biggest_block_available >= size + sizeof(t_block))
-		// 	return (ptr);
-		// if (!ptr->next)
-		// 	return (create_new_heap(ptr, size));
-		// ptr = ptr->next;
 	}
 }
-
-// void	*get_block(t_heap *heap, size_t size)
-// {
-// 	t_block	*ptr;
-// 	t_block	*prev;
-// 	size_t	i;
-
-// 	i = 0;
-// 	prev = NULL;
-// 	ptr = HEAP_SHIFT(heap);
-// 	while (1)
-// 	{
-// 		if (i == heap->block_amount)
-// 		{
-// 			ptr = create_new_block(ptr, prev, size);
-// 			heap->block_amount++;
-// 			return (ptr);
-// 		}
-// 		prev = ptr;
-// 		ptr = ptr->data_size + BLOCK_SHIFT(ptr);
-// 		i++;
-// 	}
-// }
 
 void	*malloc(size_t size)
 {
@@ -197,7 +161,6 @@ void	*malloc(size_t size)
 	pthread_mutex_lock(&g_malloc_mutex);
 	size = get_block_size(align_on_bytes(size, 16));
 	ptr = get_heap(size);
-	//ptr = get_block(ptr, size);
 	pthread_mutex_unlock(&g_malloc_mutex);
 	return (BLOCK_SHIFT(ptr));
 }
