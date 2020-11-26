@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 13:35:54 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 15:08:31 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ static void	*resize_memory(void *ptr, size_t size)
 	void	*new;
 	size_t	len;
 
-	new = malloc(size);
+	new = malloc_skip_mutex(size);
 	len = size < g_malloc.block->data_size ? size : g_malloc.block->data_size;
 	ft_memmove(new, ptr, len);
 	free(ptr);
+	pthread_mutex_unlock(&g_malloc_mutex);
 	return (new);
 }
 
@@ -77,6 +78,5 @@ void	*realloc(void *ptr, size_t size)
 				realloc_error();
 				return (NULL);
 			}
-	pthread_mutex_unlock(&g_malloc_mutex);
 	return (resize_memory(ptr, size));
 }
