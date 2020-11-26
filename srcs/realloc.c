@@ -6,13 +6,13 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 13:29:46 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 13:35:54 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-void	realloc_error(void)
+static void	realloc_error(void)
 {
 	if (g_malloc.debug_realloc)
 	{
@@ -22,7 +22,7 @@ void	realloc_error(void)
 	}
 }
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+static void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t	i;
 
@@ -47,7 +47,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	return (dst);
 }
 
-void	*resize_memory(void *ptr, size_t size)
+static void	*resize_memory(void *ptr, size_t size)
 {
 	void	*new;
 	size_t	len;
