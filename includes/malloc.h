@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 13:21:40 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/24 15:16:05 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 14:54:40 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,16 @@ typedef struct		s_malloc
 }					t_malloc;
 
 extern t_malloc			g_malloc;
-extern pthread_mutex_t 	g_malloc_mutex;
+extern pthread_mutex_t	g_malloc_mutex;
 
-void				show_alloc_mem(void);
+int						find_block(t_heap *heap, void *ptr);
 
-void				show_alloc_mem_string(void);
+void					show_alloc_mem(void);
 
-int					find_block(t_heap *heap, void *ptr);
+void					show_alloc_mem_string(void);
+
+void					show_alloc_mem_hex(void);
+
+void					show_alloc_mem_bytes(void);
 
 #endif
