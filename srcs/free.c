@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/25 13:28:04 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 11:55:59 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ void	free_error(void)
 		58);
 		exit(1);
 	}
+}
+
+void	munmap_error(void)
+{
+	write(2, "munmap: *** error: address allocation deletion failed\n", 54);
+	exit(1);
 }
 
 int	find_block(t_heap *heap, void *ptr)
@@ -82,7 +88,8 @@ void	remove_heap(t_heap *heap)
 	if (heap->prev)
 		heap->prev->next = heap->next;
 	next = heap->next;
-	munmap(heap, heap->size);
+	if (munmap(heap, heap->size) == -1)
+		munmap_error();
 	if (heap == g_malloc.tiny)
 		g_malloc.tiny = next;
 	if (heap == g_malloc.small)
