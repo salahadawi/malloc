@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 13:36:35 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 15:08:05 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,17 @@ static void	*get_heap(size_t size)
 		}
 		ptr = ptr->next;
 	}
+}
+
+void	*malloc_skip_mutex(size_t size)
+{
+	void	*ptr;
+
+	if (size == 0)
+		return (NULL);
+	size = get_block_size(align_on_bytes(size, 16));
+	ptr = get_heap(size);
+	return (BLOCK_SHIFT(ptr));
 }
 
 void	*malloc(size_t size)
