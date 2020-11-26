@@ -17,7 +17,7 @@ void	free_error(void)
 	if (g_malloc.debug_free)
 	{
 		write(2, "malloc: *** error: pointer being freed was not allocated\n",
-		58);
+		57);
 		exit(1);
 	}
 }
