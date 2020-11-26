@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 15:57:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 15:58:40 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 16:00:11 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,3 @@ void	mmap_error(void)
 	write(2, "mmap: *** error: address allocation failed\n", 49);
 	exit(1);
 }
-
