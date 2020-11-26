@@ -102,8 +102,65 @@ size_t	print_block_string(t_block *block)
 	ft_putnbr((size_t)BLOCK_SHIFT(block) + block->data_size);
 	write(1, ": ", 2);
 	ft_putnbr(block->data_size);
-	write(1, " bytes | string: ", 7);
-	write(1, BLOCK_SHIFT(block), ft_strlen(BLOCK_SHIFT(block)));
+	write(1, " bytes\n", 7);
+	write(1, BLOCK_SHIFT(block), block->data_size);
+	write(1, "\n", 1);
+	return (block->data_size);
+}
+
+void	write_data_bytes(unsigned char *data, size_t data_size)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < data_size)
+	{
+		ft_putnbr(data[i++]);
+		ft_putchar(' ');
+	}
+}
+
+void	write_data_hex(unsigned char *data, size_t data_size)
+{
+	size_t	i;
+	char	*hex;
+
+	hex = "0123456789ABCDEF";
+	i = 0;
+	while (i < data_size)
+	{
+		ft_putchar(hex[data[i] / 16]);
+		ft_putchar(hex[data[i++] % 16]);
+		ft_putchar(' ');
+	}
+}
+
+size_t	print_block_bytes(t_block *block)
+{
+	if (block->freed)
+		return (0);
+	ft_putnbr((size_t)BLOCK_SHIFT(block));
+	write(1, " - ", 3);
+	ft_putnbr((size_t)BLOCK_SHIFT(block) + block->data_size);
+	write(1, ": ", 2);
+	ft_putnbr(block->data_size);
+	write(1, " bytes\n", 7);
+	write_data_bytes(BLOCK_SHIFT(block), block->data_size);
+	write(1, "\n", 1);
+	return (block->data_size);
+}
+
+size_t	print_block_hex(t_block *block)
+{
+	if (block->freed)
+		return (0);
+	ft_putnbr((size_t)BLOCK_SHIFT(block));
+	write(1, " - ", 3);
+	ft_putnbr((size_t)BLOCK_SHIFT(block) + block->data_size);
+	write(1, ": ", 2);
+	ft_putnbr(block->data_size);
+	write(1, " bytes\n", 7);
+	write_data_hex(BLOCK_SHIFT(block), block->data_size);
 	write(1, "\n", 1);
 	return (block->data_size);
 }
@@ -164,6 +221,62 @@ void	print_heaps_strings(t_heap *heap)
 	}
 }
 
+void	print_heaps_bytes(t_heap *heap)
+{
+	t_block *block;
+	size_t	i;
+	size_t	total_size;
+	size_t	heap_num;
+
+	print_heap_size(heap);
+	heap_num = 1;
+	while (heap)
+	{
+		i = 0;
+		total_size = 0;
+		block = HEAP_SHIFT(heap);
+		write(1, "HEAP NUMBER: ", 13);
+		ft_putnbr_nl(heap_num);
+		while (i++ < heap->block_amount)
+		{
+			total_size += print_block_bytes(block);
+			block = BLOCK_SHIFT(block) + block->data_size;
+		}
+		write(1, "Total :", 7);
+		ft_putnbr_nl(total_size);
+		heap = heap->next;
+		heap_num++;
+	}
+}
+
+void	print_heaps_hex(t_heap *heap)
+{
+	t_block *block;
+	size_t	i;
+	size_t	total_size;
+	size_t	heap_num;
+
+	print_heap_size(heap);
+	heap_num = 1;
+	while (heap)
+	{
+		i = 0;
+		total_size = 0;
+		block = HEAP_SHIFT(heap);
+		write(1, "HEAP NUMBER: ", 13);
+		ft_putnbr_nl(heap_num);
+		while (i++ < heap->block_amount)
+		{
+			total_size += print_block_hex(block);
+			block = BLOCK_SHIFT(block) + block->data_size;
+		}
+		write(1, "Total :", 7);
+		ft_putnbr_nl(total_size);
+		heap = heap->next;
+		heap_num++;
+	}
+}
+
 void	show_alloc_mem(void)
 {
 	pthread_mutex_lock(&g_malloc_mutex);
@@ -179,5 +292,23 @@ void	show_alloc_mem_string(void)
 	print_heaps_strings(g_malloc.tiny);
 	print_heaps_strings(g_malloc.small);
 	print_heaps_strings(g_malloc.large);
+	pthread_mutex_unlock(&g_malloc_mutex);
+}
+
+void	show_alloc_mem_bytes(void)
+{
+	pthread_mutex_lock(&g_malloc_mutex);
+	print_heaps_bytes(g_malloc.tiny);
+	print_heaps_bytes(g_malloc.small);
+	print_heaps_bytes(g_malloc.large);
+	pthread_mutex_unlock(&g_malloc_mutex);
+}
+
+void	show_alloc_mem_hex(void)
+{
+	pthread_mutex_lock(&g_malloc_mutex);
+	print_heaps_hex(g_malloc.tiny);
+	print_heaps_hex(g_malloc.small);
+	print_heaps_hex(g_malloc.large);
 	pthread_mutex_unlock(&g_malloc_mutex);
 }
