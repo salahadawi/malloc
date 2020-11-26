@@ -6,13 +6,13 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 13:34:34 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 13:34:57 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-void	free_error(void)
+static void	free_error(void)
 {
 	if (g_malloc.debug_free)
 	{
@@ -22,13 +22,13 @@ void	free_error(void)
 	}
 }
 
-void	munmap_error(void)
+static void	munmap_error(void)
 {
 	write(2, "munmap: *** error: address allocation deletion failed\n", 54);
 	exit(1);
 }
 
-int	find_block(t_heap *heap, void *ptr)
+static int	find_block(t_heap *heap, void *ptr)
 {
 	t_block *tmp;
 	size_t	i;
@@ -53,13 +53,13 @@ int	find_block(t_heap *heap, void *ptr)
 	return (0);
 }
 
-void	set_block_free(t_heap *heap, t_block *block)
+static void	set_block_free(t_heap *heap, t_block *block)
 {
 	block->freed = 1;
 	heap->blocks_freed++;
 }
 
-void	remove_heap(t_heap *heap)
+static void	remove_heap(t_heap *heap)
 {
 	t_heap *next;
 
