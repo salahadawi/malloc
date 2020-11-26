@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 13:21:40 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 15:08:55 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 15:41:17 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ extern pthread_mutex_t	g_malloc_mutex;
 int						find_block(t_heap *heap, void *ptr);
 
 void					*malloc_skip_mutex(size_t size);
+
+void					free_skip_mutex(void *ptr);
 
 void					show_alloc_mem(void);
 
