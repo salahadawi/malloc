@@ -6,17 +6,11 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 15:08:05 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 15:58:18 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
-
-static void	mmap_error(void)
-{
-	write(2, "mmap: *** error: address allocation failed\n", 49);
-	exit(1);
-}
 
 static size_t	align_on_bytes(size_t num, size_t alignment)
 {

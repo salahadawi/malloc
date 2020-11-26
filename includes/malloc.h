@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 13:21:40 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 15:41:17 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 15:58:57 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,13 @@ void					show_alloc_mem_string(void);
 void					show_alloc_mem_hex(void);
 
 void					show_alloc_mem_bytes(void);
+
+void					realloc_error(void);
+
+void					free_error(void);
+
+void					munmap_error(void);
+
+void					mmap_error(void);
 
 #endif

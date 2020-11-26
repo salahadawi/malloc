@@ -6,21 +6,11 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 15:40:55 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 15:58:34 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
-
-static void	realloc_error(void)
-{
-	if (g_malloc.debug_realloc)
-	{
-		write(2,
-		"realloc: *** error: pointer being realloced was not allocated\n", 62);
-		exit(1);
-	}
-}
 
 static void	*ft_memmove(void *dst, const void *src, size_t len)
 {

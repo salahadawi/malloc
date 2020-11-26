@@ -6,27 +6,11 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 15:40:19 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 15:57:34 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
-
-static void	free_error(void)
-{
-	if (g_malloc.debug_free)
-	{
-		write(2, "malloc: *** error: pointer being freed was not allocated\n",
-		57);
-		exit(1);
-	}
-}
-
-static void	munmap_error(void)
-{
-	write(2, "munmap: *** error: address allocation deletion failed\n", 54);
-	exit(1);
-}
 
 int	find_block(t_heap *heap, void *ptr)
 {
