@@ -6,7 +6,7 @@
 #    By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/10 19:26:38 by sadawi            #+#    #+#              #
-#    Updated: 2020/11/24 13:38:35 by sadawi           ###   ########.fr        #
+#    Updated: 2020/11/26 15:19:20 by sadawi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ all:
 $(NAME): $(SRCS)
 	@/bin/rm -f $(NAME) $(LINK)
 	@rm -rf objs
-	@echo Compiling $(NAME_ASM)...
+	@echo Compiling $(NAME)...
 	@gcc $(FLAGS) $(INCLUDES) -c $(SRCS)
 	@mkdir objs
 	@mv $(notdir $(SRCS:.c=.o)) objs
