@@ -6,11 +6,17 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/25 13:28:42 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 11:54:28 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
+
+void	mmap_error(void)
+{
+	write(2, "mmap: *** error: address allocation failed\n", 49);
+	exit(1);
+}
 
 size_t	align_on_bytes(size_t num, size_t alignment)
 {
@@ -71,6 +77,7 @@ t_heap	*create_new_heap(t_heap *prev, size_t size)
 	heap_size = get_heap_size(size);
 	new_heap = (t_heap*)mmap(NULL, heap_size, PROT_READ | PROT_WRITE,
 	MAP_PRIVATE | MAP_ANON, -1, 0);
+	new_heap == MAP_FAILED ? mmap_error() : 0;
 	new_heap->prev = prev;
 	new_heap->next = NULL;
 	new_heap->size = heap_size;
