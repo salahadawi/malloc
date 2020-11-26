@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 13:33:47 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/11/26 13:34:34 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,6 @@ void	set_block_free(t_heap *heap, t_block *block)
 {
 	block->freed = 1;
 	heap->blocks_freed++;
-}
-
-void	merge_blocks(t_block *block)
-{
-	if (block->prev && block->prev->freed)
-	{
-		block->prev->data_size += block->data_size + sizeof(t_block);
-		block->prev->next = block->next;
-		if (block->next)
-			block->next->prev = block->prev;
-		block = block->prev;
-	}
-	if (block->next && block->next->freed)
-	{
-		block->data_size += block->next->data_size;
-		if (block->next->next)
-			block->next->next->prev = block;
-		block->next = block->next->next;
-	}
 }
 
 void	remove_heap(t_heap *heap)
