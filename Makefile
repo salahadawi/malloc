@@ -6,7 +6,7 @@
 #    By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/10 19:26:38 by sadawi            #+#    #+#              #
-#    Updated: 2020/11/26 15:59:11 by sadawi           ###   ########.fr        #
+#    Updated: 2020/11/30 12:15:25 by sadawi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ OBJS = $(addprefix objs/, $(notdir $(SRCS:.c=.o)))
 
 INCLUDES = -I includes/
 FLAGS = -Wall -Wextra -Werror
+LINUX_FLAGS = -fPIC
 
 all:
 	@make --no-print-director $(NAME)
@@ -32,7 +33,7 @@ $(NAME): $(SRCS)
 	@/bin/rm -f $(NAME) $(LINK)
 	@rm -rf objs
 	@echo Compiling $(NAME)...
-	@gcc $(FLAGS) $(INCLUDES) -c $(SRCS)
+	@gcc $(FLAGS) $(INCLUDES) -c $(SRCS) $(LINUX_FLAGS)
 	@mkdir objs
 	@mv $(notdir $(SRCS:.c=.o)) objs
 	@gcc -shared $(INCLUDES) $(OBJS) -o $(NAME)
