@@ -126,16 +126,16 @@ void	print_heap_size(t_heap *heap)
 		write(1, "LARGE : ", 8);
 	else
 		return ;
-	ft_putnbr_nl((size_t)heap);
+	print_as_hex_nl((size_t)heap);
 }
 
 size_t	print_block(t_block *block)
 {
 	if (block->freed)
 		return (0);
-	ft_putnbr((size_t)BLOCK_SHIFT(block));
+	print_as_hex((size_t)BLOCK_SHIFT(block));
 	write(1, " - ", 3);
-	ft_putnbr((size_t)BLOCK_SHIFT(block) + block->data_size);
+	print_as_hex((size_t)BLOCK_SHIFT(block) + block->data_size);
 	write(1, ": ", 2);
 	ft_putnbr(block->data_size);
 	write(1, " bytes\n", 7);
@@ -157,9 +157,9 @@ size_t	print_block_string(t_block *block)
 {
 	if (block->freed)
 		return (0);
-	ft_putnbr((size_t)BLOCK_SHIFT(block));
+	print_as_hex((size_t)BLOCK_SHIFT(block));
 	write(1, " - ", 3);
-	ft_putnbr((size_t)BLOCK_SHIFT(block) + block->data_size);
+	print_as_hex((size_t)BLOCK_SHIFT(block) + block->data_size);
 	write(1, ": ", 2);
 	ft_putnbr(block->data_size);
 	write(1, " bytes\n", 7);
@@ -199,9 +199,9 @@ size_t	print_block_bytes(t_block *block)
 {
 	if (block->freed)
 		return (0);
-	ft_putnbr((size_t)BLOCK_SHIFT(block));
+	print_as_hex((size_t)BLOCK_SHIFT(block));
 	write(1, " - ", 3);
-	ft_putnbr((size_t)BLOCK_SHIFT(block) + block->data_size);
+	print_as_hex((size_t)BLOCK_SHIFT(block) + block->data_size);
 	write(1, ": ", 2);
 	ft_putnbr(block->data_size);
 	write(1, " bytes\n", 7);
@@ -214,9 +214,9 @@ size_t	print_block_hex(t_block *block)
 {
 	if (block->freed)
 		return (0);
-	ft_putnbr((size_t)BLOCK_SHIFT(block));
+	print_as_hex((size_t)BLOCK_SHIFT(block));
 	write(1, " - ", 3);
-	ft_putnbr((size_t)BLOCK_SHIFT(block) + block->data_size);
+	print_as_hex((size_t)BLOCK_SHIFT(block) + block->data_size);
 	write(1, ": ", 2);
 	ft_putnbr(block->data_size);
 	write(1, " bytes\n", 7);
