@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 15:50:37 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 14:48:29 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/01 10:40:08 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,66 @@ void	ft_putnbr_nl(size_t n)
 	while (i >= 0)
 		ft_putchar(arr[i--] + '0');
 	ft_putchar('\n');
+}
+
+static int	ft_nbrlen_base(size_t n, int base)
+{
+	int i;
+
+	i = 0;
+	while (n || i == 0)
+	{
+		n /= base;
+		i++;
+	}
+	return (i);
+}
+
+static char	base_digit(size_t n, int base)
+{
+	char	*format;
+	int		i;
+
+	format = "0123456789ABCDEF";
+	i = n % base;
+	if (i < 0)
+		i *= -1;
+	return (format[i]);
+}
+
+void	print_as_hex(size_t num)
+{
+	int		i;
+	int		len;
+	char	arr[30];
+
+	len = ft_nbrlen_base(num, 16);
+	i = len - 1;
+	while (i >= 0)
+	{
+		arr[i--] = base_digit(num, 16);
+		num /= 16;
+	}
+	write(1, "0x", 2);
+	write(1, arr, len);
+}
+
+void	print_as_hex_nl(size_t num)
+{
+	int		i;
+	int		len;
+	char	arr[30];
+
+	len = ft_nbrlen_base(num, 16);
+	i = len -1;
+	while (i >= 0)
+	{
+		arr[i--] = base_digit(num, 16);
+		num /= 16;
+	}
+	write(1, "0x", 2);
+	write(1, arr, len);
+	write(1, "\n", 1);
 }
 
 void	print_heap_size(t_heap *heap)
