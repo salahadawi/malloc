@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 13:21:40 by sadawi            #+#    #+#             */
-/*   Updated: 2020/12/01 11:16:14 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/01 13:36:20 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,58 @@ void					free_error(void);
 void					munmap_error(void);
 
 void					mmap_error(void);
+
+int						ft_isprint(int c);
+
+void					ft_putchar(int c);
+
+void					ft_putnbr(size_t n);
+
+void					ft_putnbr_nl(size_t n);
+
+size_t					ft_strlen(char *str);
+
+size_t					get_heap_size(size_t size);
+
+size_t					get_block_size(size_t size);
+
+size_t					calculate_large_heap_size(size_t size);
+
+void					*get_heap(size_t size);
+
+t_heap					*create_new_heap(t_heap *prev, size_t size);
+
+void					store_head(t_heap *new_heap, size_t size);
+
+void					print_as_hex(size_t num);
+
+void					print_as_hex_nl(size_t num);
+
+size_t					print_block(t_block *block);
+
+size_t					print_block_string(t_block *block);
+
+size_t					print_block_bytes(t_block *block);
+
+size_t					print_block_hex(t_block *block);
+
+void					print_heaps(t_heap *heap);
+
+void					print_heaps_strings(t_heap *heap);
+
+void					print_heaps_bytes(t_heap *heap);
+
+void					print_heaps_hex(t_heap *heap);
+
+void					write_data_bytes(unsigned char *data, size_t data_size);
+
+void					write_data_ascii(unsigned char *data, int i);
+
+void					write_data_hex(unsigned char *data, size_t data_size);
+
+void					*get_block(t_heap *heap, size_t size);
+
+t_block					*create_new_block(t_block *ptr, t_block *prev,
+									size_t size, t_heap *heap);
 
 #endif
