@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 15:50:37 by sadawi            #+#    #+#             */
-/*   Updated: 2020/12/01 11:32:07 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/01 13:08:43 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	print_as_hex_nl(size_t num)
 	char	arr[30];
 
 	len = ft_nbrlen_base(num, 16);
-	i = len -1;
+	i = len - 1;
 	while (i >= 0)
 	{
 		arr[i--] = base_digit(num, 16);
