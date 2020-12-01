@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 13:21:40 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 15:58:57 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/01 11:16:14 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define TINY_BLOCK_SIZE (TINY_HEAP_ALLOCATION_SIZE / 128)
 # define SMALL_HEAP_ALLOCATION_SIZE (16 * getpagesize())
 # define SMALL_BLOCK_SIZE (SMALL_HEAP_ALLOCATION_SIZE / 128)
+
+# define HEX_PRINT_WIDTH 16
 
 typedef struct			s_block
 {
