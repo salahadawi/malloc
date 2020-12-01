@@ -36,7 +36,7 @@ $(NAME): $(SRCS)
 	@gcc $(FLAGS) $(INCLUDES) -c $(SRCS) $(LINUX_FLAGS)
 	@mkdir objs
 	@mv $(notdir $(SRCS:.c=.o)) objs
-	@gcc -shared $(INCLUDES) $(OBJS) -o $(NAME)
+	@gcc -shared $(FLAGS) $(INCLUDES) $(OBJS) -o $(NAME)
 	@ln -s $(NAME) $(LINK)
 	@echo $(NAME) compiled succesfully!
 
