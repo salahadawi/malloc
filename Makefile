@@ -6,7 +6,7 @@
 #    By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/10 19:26:38 by sadawi            #+#    #+#              #
-#    Updated: 2020/11/30 12:15:25 by sadawi           ###   ########.fr        #
+#    Updated: 2020/12/01 11:37:30 by sadawi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,11 +46,10 @@ lib:
 clean:
 	@/bin/rm -f $(OBJS)
 	@rm -rf objs
-	@make -C libft/ clean
 	@echo Clean successful!
 
 fclean: clean
-	@make -C libft/ fclean
+	@rm -rf $(NAME) $(LINK)
 	@echo FClean successful!
 
 re: fclean all
