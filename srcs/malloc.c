@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 15:58:18 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/01 13:35:39 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,65 +17,7 @@ static size_t	align_on_bytes(size_t num, size_t alignment)
 	return ((num + (alignment - 1)) & ~(alignment - 1));
 }
 
-static size_t	calculate_large_heap_size(size_t size)
-{
-	int multiple;
-
-	multiple = getpagesize() / ((size + sizeof(t_block)) + sizeof(t_heap));
-	multiple++;
-	return (multiple * (size + sizeof(t_block)) + sizeof(t_heap));
-}
-
-static size_t	get_heap_size(size_t size)
-{
-	if (size <= (size_t)TINY_BLOCK_SIZE)
-		return (TINY_HEAP_ALLOCATION_SIZE);
-	if (size <= (size_t)SMALL_BLOCK_SIZE)
-		return (SMALL_HEAP_ALLOCATION_SIZE);
-	return (calculate_large_heap_size(size));
-}
-
-static size_t	get_block_size(size_t size)
-{
-	if (size <= (size_t)TINY_BLOCK_SIZE)
-		return (TINY_BLOCK_SIZE);
-	if (size <= (size_t)SMALL_BLOCK_SIZE)
-		return (SMALL_BLOCK_SIZE);
-	return (size);
-}
-
-static void	store_head(t_heap *new_heap, size_t size)
-{
-	if (size <= (size_t)TINY_BLOCK_SIZE)
-		g_malloc.tiny = new_heap;
-	else if (size <= (size_t)SMALL_BLOCK_SIZE)
-		g_malloc.small = new_heap;
-	else
-		g_malloc.large = new_heap;
-}
-
-static t_heap	*create_new_heap(t_heap *prev, size_t size)
-{
-	t_heap	*new_heap;
-	size_t	heap_size;
-
-	heap_size = get_heap_size(size);
-	new_heap = (t_heap*)mmap(NULL, heap_size, PROT_READ | PROT_WRITE,
-	MAP_PRIVATE | MAP_ANON, -1, 0);
-	new_heap == MAP_FAILED ? mmap_error() : 0;
-	new_heap->prev = prev;
-	new_heap->next = NULL;
-	new_heap->size = heap_size;
-	new_heap->block_amount = 0;
-	new_heap->blocks_freed = 0;
-	if (prev)
-		prev->next = new_heap;
-	else
-		store_head(new_heap, size);
-	return (new_heap);
-}
-
-static t_block	*create_new_block(t_block *ptr, t_block *prev,
+t_block	*create_new_block(t_block *ptr, t_block *prev,
 									size_t size, t_heap *heap)
 {
 	size = get_block_size(size);
@@ -89,16 +31,7 @@ static t_block	*create_new_block(t_block *ptr, t_block *prev,
 	return (ptr);
 }
 
-static t_heap	*get_heap_list(size_t size)
-{
-	if (size <= (size_t)TINY_BLOCK_SIZE)
-		return (g_malloc.tiny);
-	if (size <= (size_t)SMALL_BLOCK_SIZE)
-		return (g_malloc.small);
-	return (g_malloc.large);
-}
-
-static void	*get_block(t_heap *heap, size_t size)
+void		*get_block(t_heap *heap, size_t size)
 {
 	size_t	i;
 	size_t	size_left;
@@ -127,26 +60,7 @@ static void	*get_block(t_heap *heap, size_t size)
 	return (NULL);
 }
 
-static void	*get_heap(size_t size)
-{
-	t_heap	*ptr;
-	t_block	*block;
-
-	ptr = get_heap_list(size);
-	while (1)
-	{
-		if (ptr && (block = get_block(ptr, size)))
-			return (block);
-		if (!ptr || !ptr->next)
-		{
-			ptr = create_new_heap(ptr, size);
-			return (create_new_block(HEAP_SHIFT(ptr), NULL, size, ptr));
-		}
-		ptr = ptr->next;
-	}
-}
-
-void	*malloc_skip_mutex(size_t size)
+void			*malloc_skip_mutex(size_t size)
 {
 	void	*ptr;
 
@@ -157,7 +71,7 @@ void	*malloc_skip_mutex(size_t size)
 	return (BLOCK_SHIFT(ptr));
 }
 
-void	*malloc(size_t size)
+void			*malloc(size_t size)
 {
 	void	*ptr;
 

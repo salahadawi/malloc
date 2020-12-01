@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 15:58:34 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/01 13:17:08 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	*resize_memory(void *ptr, size_t size)
 	return (new);
 }
 
-void	*realloc(void *ptr, size_t size)
+void		*realloc(void *ptr, size_t size)
 {
 	if (!ptr)
 		return (malloc(size));

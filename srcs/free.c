@@ -6,13 +6,13 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/11/26 15:57:34 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/01 13:09:40 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-int	find_block(t_heap *heap, void *ptr)
+int			find_block(t_heap *heap, void *ptr)
 {
 	t_block *tmp;
 	size_t	i;
@@ -63,7 +63,7 @@ static void	remove_heap(t_heap *heap)
 		g_malloc.large = next;
 }
 
-void	free_skip_mutex(void *ptr)
+void		free_skip_mutex(void *ptr)
 {
 	if (!ptr)
 		return ;
@@ -79,7 +79,7 @@ void	free_skip_mutex(void *ptr)
 		remove_heap(g_malloc.heap);
 }
 
-void	free(void *ptr)
+void		free(void *ptr)
 {
 	if (!ptr)
 		return ;
