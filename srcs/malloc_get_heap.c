@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:26:58 by sadawi            #+#    #+#             */
-/*   Updated: 2020/12/01 13:36:52 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/02 13:13:48 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_heap			*create_new_heap(t_heap *prev, size_t size)
 	return (new_heap);
 }
 
-void		store_head(t_heap *new_heap, size_t size)
+void			store_head(t_heap *new_heap, size_t size)
 {
 	if (size <= (size_t)TINY_BLOCK_SIZE)
 		g_malloc.tiny = new_heap;

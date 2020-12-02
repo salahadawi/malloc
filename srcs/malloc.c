@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/12/01 13:35:39 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/02 13:13:36 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static size_t	align_on_bytes(size_t num, size_t alignment)
 	return ((num + (alignment - 1)) & ~(alignment - 1));
 }
 
-t_block	*create_new_block(t_block *ptr, t_block *prev,
+t_block			*create_new_block(t_block *ptr, t_block *prev,
 									size_t size, t_heap *heap)
 {
 	size = get_block_size(size);
@@ -31,7 +31,7 @@ t_block	*create_new_block(t_block *ptr, t_block *prev,
 	return (ptr);
 }
 
-void		*get_block(t_heap *heap, size_t size)
+void			*get_block(t_heap *heap, size_t size)
 {
 	size_t	i;
 	size_t	size_left;
