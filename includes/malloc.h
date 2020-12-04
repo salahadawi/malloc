@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 13:21:40 by sadawi            #+#    #+#             */
-/*   Updated: 2020/12/02 13:14:46 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/04 11:49:30 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@
 # include <pthread.h>
 # include <unistd.h>
 # include <stdlib.h>
-
-# define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap))
-# define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block))
-
-# define TINY_HEAP_ALLOCATION_SIZE (4 * getpagesize())
-# define TINY_BLOCK_SIZE (TINY_HEAP_ALLOCATION_SIZE / 128)
-# define SMALL_HEAP_ALLOCATION_SIZE (16 * getpagesize())
-# define SMALL_BLOCK_SIZE (SMALL_HEAP_ALLOCATION_SIZE / 128)
 
 # define HEX_PRINT_WIDTH 16
 
@@ -143,5 +135,9 @@ void					*get_block(t_heap *heap, size_t size);
 
 t_block					*create_new_block(t_block *ptr, t_block *prev,
 									size_t size, t_heap *heap);
+
+void					*heap_shift(void *start);
+
+void					*block_shift(void *start);
 
 #endif
