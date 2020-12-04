@@ -55,6 +55,10 @@ typedef struct			s_malloc
 	t_block				*block;
 	int					debug_free;
 	int					debug_realloc;
+	size_t				tiny_heap_alloc_size;
+	size_t				small_heap_alloc_size;
+	size_t				tiny_block_size;
+	size_t				small_block_size;
 
 }						t_malloc;
 

@@ -14,9 +14,9 @@
 
 static t_heap	*get_heap_list(size_t size)
 {
-	if (size <= (size_t)TINY_BLOCK_SIZE)
+	if (size <= (size_t)g_malloc.tiny_block_size)
 		return (g_malloc.tiny);
-	if (size <= (size_t)SMALL_BLOCK_SIZE)
+	if (size <= (size_t)g_malloc.small_block_size)
 		return (g_malloc.small);
 	return (g_malloc.large);
 }
@@ -63,9 +63,9 @@ t_heap			*create_new_heap(t_heap *prev, size_t size)
 
 void			store_head(t_heap *new_heap, size_t size)
 {
-	if (size <= (size_t)TINY_BLOCK_SIZE)
+	if (size <= (size_t)g_malloc.tiny_block_size)
 		g_malloc.tiny = new_heap;
-	else if (size <= (size_t)SMALL_BLOCK_SIZE)
+	else if (size <= (size_t)g_malloc.small_block_size)
 		g_malloc.small = new_heap;
 	else
 		g_malloc.large = new_heap;
