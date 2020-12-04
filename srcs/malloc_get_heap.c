@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:26:58 by sadawi            #+#    #+#             */
-/*   Updated: 2020/12/02 13:13:48 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/04 11:50:47 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void			*get_heap(size_t size)
 		if (!ptr || !ptr->next)
 		{
 			ptr = create_new_heap(ptr, size);
-			return (create_new_block(HEAP_SHIFT(ptr), NULL, size, ptr));
+			return (create_new_block(heap_shift(ptr), NULL, size, ptr));
 		}
 		ptr = ptr->next;
 	}

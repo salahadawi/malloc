@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/12/02 13:13:36 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/04 11:36:36 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			*get_block(t_heap *heap, size_t size)
 
 	i = 0;
 	size_left = heap->size - sizeof(t_heap);
-	tmp = HEAP_SHIFT(heap);
+	tmp = heap_shift(heap);
 	prev = NULL;
 	while (i != heap->block_amount)
 	{
@@ -52,7 +52,7 @@ void			*get_block(t_heap *heap, size_t size)
 		}
 		size_left -= tmp->data_size + sizeof(t_block);
 		prev = tmp;
-		tmp = tmp->data_size + BLOCK_SHIFT(tmp);
+		tmp = tmp->data_size + block_shift(tmp);
 		i++;
 	}
 	if (size + sizeof(t_block) <= size_left)
@@ -68,7 +68,7 @@ void			*malloc_skip_mutex(size_t size)
 		return (NULL);
 	size = get_block_size(align_on_bytes(size, 16));
 	ptr = get_heap(size);
-	return (BLOCK_SHIFT(ptr));
+	return (block_shift(ptr));
 }
 
 void			*malloc(size_t size)
@@ -81,5 +81,5 @@ void			*malloc(size_t size)
 	size = get_block_size(align_on_bytes(size, 16));
 	ptr = get_heap(size);
 	pthread_mutex_unlock(&g_malloc_mutex);
-	return (BLOCK_SHIFT(ptr));
+	return (block_shift(ptr));
 }

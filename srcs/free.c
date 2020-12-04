@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:58:17 by sadawi            #+#    #+#             */
-/*   Updated: 2020/12/01 13:09:40 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/04 11:36:36 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int			find_block(t_heap *heap, void *ptr)
 	while (heap)
 	{
 		i = 0;
-		tmp = HEAP_SHIFT(heap);
+		tmp = heap_shift(heap);
 		while (i < heap->block_amount)
 		{
-			if (BLOCK_SHIFT(tmp) == ptr)
+			if (block_shift(tmp) == ptr)
 			{
 				g_malloc.heap = heap;
 				g_malloc.block = tmp;

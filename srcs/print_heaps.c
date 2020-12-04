@@ -6,7 +6,7 @@
 /*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:15:09 by sadawi            #+#    #+#             */
-/*   Updated: 2020/12/01 13:37:30 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/04 11:36:36 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ void	print_heaps(t_heap *heap)
 	{
 		i = 0;
 		total_size = 0;
-		block = HEAP_SHIFT(heap);
+		block = heap_shift(heap);
 		write(1, "HEAP NUMBER: ", 13);
 		ft_putnbr_nl(heap_num);
 		while (i++ < heap->block_amount)
 		{
 			total_size += print_block(block);
-			block = BLOCK_SHIFT(block) + block->data_size;
+			block = block_shift(block) + block->data_size;
 		}
 		write(1, "Total :", 7);
 		ft_putnbr_nl(total_size);
@@ -66,13 +66,13 @@ void	print_heaps_strings(t_heap *heap)
 	{
 		i = 0;
 		total_size = 0;
-		block = HEAP_SHIFT(heap);
+		block = heap_shift(heap);
 		write(1, "HEAP NUMBER: ", 13);
 		ft_putnbr_nl(heap_num);
 		while (i++ < heap->block_amount)
 		{
 			total_size += print_block_string(block);
-			block = BLOCK_SHIFT(block) + block->data_size;
+			block = block_shift(block) + block->data_size;
 		}
 		write(1, "Total :", 7);
 		ft_putnbr_nl(total_size);
@@ -94,13 +94,13 @@ void	print_heaps_bytes(t_heap *heap)
 	{
 		i = 0;
 		total_size = 0;
-		block = HEAP_SHIFT(heap);
+		block = heap_shift(heap);
 		write(1, "HEAP NUMBER: ", 13);
 		ft_putnbr_nl(heap_num);
 		while (i++ < heap->block_amount)
 		{
 			total_size += print_block_bytes(block);
-			block = BLOCK_SHIFT(block) + block->data_size;
+			block = block_shift(block) + block->data_size;
 		}
 		write(1, "Total :", 7);
 		ft_putnbr_nl(total_size);
@@ -122,13 +122,13 @@ void	print_heaps_hex(t_heap *heap)
 	{
 		i = 0;
 		total_size = 0;
-		block = HEAP_SHIFT(heap);
+		block = heap_shift(heap);
 		write(1, "HEAP NUMBER: ", 13);
 		ft_putnbr_nl(heap_num);
 		while (i++ < heap->block_amount)
 		{
 			total_size += print_block_hex(block);
-			block = BLOCK_SHIFT(block) + block->data_size;
+			block = block_shift(block) + block->data_size;
 		}
 		write(1, "Total :", 7);
 		ft_putnbr_nl(total_size);
