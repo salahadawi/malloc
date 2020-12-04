@@ -6,7 +6,7 @@
 #    By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/10 19:26:38 by sadawi            #+#    #+#              #
-#    Updated: 2020/12/01 13:57:06 by sadawi           ###   ########.fr        #
+#    Updated: 2020/12/04 11:37:01 by sadawi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LINK = libft_malloc_$(HOSTTYPE).so
 
 CFILES = debug.c error.c free.c ft_isprint.c ft_putchar.c ft_putnbr.c \
 ft_strlen.c get_size.c globals.c malloc.c malloc_get_heap.c print_as_hex.c \
-print_blocks.c print_heaps.c realloc.c show_alloc_mem.c write_data.c
+print_blocks.c print_heaps.c realloc.c show_alloc_mem.c write_data.c shift.c
 
 SRCS = $(addprefix srcs/, $(CFILES))
 OBJS = $(addprefix objs/, $(notdir $(SRCS:.c=.o)))
